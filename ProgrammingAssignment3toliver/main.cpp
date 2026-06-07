@@ -8,6 +8,7 @@ int main(void)
 	const int WIDTH = 800;
 	const int HEIGHT = 600;
 	const int FPS = 60;
+	const int NUM_CANNONBALLS = 10;
 
 	enum KEYS { LEFT, RIGHT };
 	bool keys[2] = { false, false };
@@ -68,7 +69,7 @@ int main(void)
 		return -1;
 	}
 
-	Cannonball cannonBall;
+	Cannonball cannonBalls[NUM_CANNONBALLS];
 
 	// Cannon position near the bottom center of the screen.
 	float cannonX = WIDTH / 2;
@@ -109,7 +110,10 @@ int main(void)
 			{
 				cannonAngle = 1.0;
 			}
-			cannonBall.UpdateCannonball(WIDTH, HEIGHT);
+			for (int i = 0; i < NUM_CANNONBALLS; i++)
+			{
+				cannonBalls[i].UpdateCannonball(WIDTH, HEIGHT);
+			}
 		}
 		else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 		{
@@ -132,7 +136,14 @@ int main(void)
 				break;
 
 			case ALLEGRO_KEY_SPACE:
-				cannonBall.FireCannonball(cannonX, cannonY, cannonAngle);
+				for (int i = 0; i < NUM_CANNONBALLS; i++)
+				{
+					if (!cannonBalls[i].getLive())
+					{
+						cannonBalls[i].FireCannonball(cannonX, cannonY, cannonAngle);
+						break;
+					}
+				}
 				break;
 			}
 		}
@@ -180,7 +191,10 @@ int main(void)
 				cannonAngle,
 				0);
 			//Draw cannonball
-			cannonBall.DrawCannonball();
+			for (int i = 0; i < NUM_CANNONBALLS; i++)
+			{
+				cannonBalls[i].DrawCannonball();
+			}
 
 			al_flip_display();
 		}

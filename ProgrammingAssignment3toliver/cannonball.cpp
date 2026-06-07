@@ -35,7 +35,7 @@ void Cannonball::DrawCannonball()
 			al_get_bitmap_width(image),
 			al_get_bitmap_height(image),
 			x, y,
-			35, 35,
+			45, 45,
 			0
 		);
 	}
