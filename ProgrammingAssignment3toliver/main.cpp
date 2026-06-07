@@ -1,6 +1,7 @@
 #include <allegro5\allegro.h>
 #include <allegro5\allegro_image.h>
 #include <allegro5\allegro_primitives.h>
+#include "cannonball.h"
 
 int main(void)
 {
@@ -21,7 +22,6 @@ int main(void)
 	ALLEGRO_BITMAP* background = NULL;
 	ALLEGRO_BITMAP* cannon = NULL;
 	ALLEGRO_BITMAP* enemy = NULL;
-	ALLEGRO_BITMAP* cannonball = NULL;
 	ALLEGRO_BITMAP* base = NULL;
 
 	if (!al_init())
@@ -57,17 +57,18 @@ int main(void)
 	background = al_load_bitmap("background.png");
 	cannon = al_load_bitmap("cannon.png");
 	enemy = al_load_bitmap("enemy.png");
-	cannonball = al_load_bitmap("cannonball.png");
 	base = al_load_bitmap("base.png");
 
 	// Error checking for image files.
-	if (!background || !cannon || !enemy || !cannonball || !base)
+	if (!background || !cannon || !enemy || !base)
 	{
 		al_destroy_display(display);
 		al_destroy_event_queue(event_queue);
 		al_destroy_timer(timer);
 		return -1;
 	}
+
+	Cannonball cannonBall;
 
 	// Cannon position near the bottom center of the screen.
 	float cannonX = WIDTH / 2;
@@ -108,6 +109,7 @@ int main(void)
 			{
 				cannonAngle = 1.0;
 			}
+			cannonBall.UpdateCannonball(WIDTH, HEIGHT);
 		}
 		else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 		{
@@ -127,6 +129,10 @@ int main(void)
 
 			case ALLEGRO_KEY_RIGHT:
 				keys[RIGHT] = true;
+				break;
+
+			case ALLEGRO_KEY_SPACE:
+				cannonBall.FireCannonball(cannonX, cannonY, cannonAngle);
 				break;
 			}
 		}
@@ -162,11 +168,6 @@ int main(void)
 			al_draw_bitmap(enemy,
 				WIDTH / 2 - al_get_bitmap_width(enemy) / 2, 50, 0);
 
-			// Draw one sample cannonball near the cannon.
-			al_draw_bitmap(cannonball,
-				WIDTH / 2,
-				HEIGHT - 150, 0);
-
 			// Draw the cannon rotated around its center.
 			al_draw_scaled_rotated_bitmap(
 				cannon,
@@ -178,6 +179,8 @@ int main(void)
 				0.35,
 				cannonAngle,
 				0);
+			//Draw cannonball
+			cannonBall.DrawCannonball();
 
 			al_flip_display();
 		}
@@ -186,7 +189,6 @@ int main(void)
 	al_destroy_bitmap(background);
 	al_destroy_bitmap(cannon);
 	al_destroy_bitmap(enemy);
-	al_destroy_bitmap(cannonball);
 	al_destroy_bitmap(base);
 
 	al_destroy_timer(timer);
