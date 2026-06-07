@@ -73,7 +73,7 @@ int main(void)
 		// Draw the starting screen.
 		al_draw_bitmap(background, 0, 0, 0);
 
-		// Draw the iceberg near the bottom.
+		// Draw the base near the bottom.
 		al_draw_bitmap(iceberg, WIDTH / 2 - al_get_bitmap_width(iceberg) / 2,
 			HEIGHT - al_get_bitmap_height(iceberg), 0);
 
@@ -84,7 +84,7 @@ int main(void)
 		// Draw one sample enemy near the top.
 		al_draw_bitmap(enemy, WIDTH / 2 - al_get_bitmap_width(enemy) / 2, 50, 0);
 
-		// Draw one sample snowball near the cannon.
+		// Draw one sample cannonball near the cannon.
 		al_draw_bitmap(snowball, WIDTH / 2, HEIGHT - 150, 0);
 
 		al_flip_display();
