@@ -19,8 +19,8 @@ Enemy::Enemy()
 
 	al_convert_mask_to_alpha(image, al_map_rgb(255, 255, 255));
 
-	boundx = al_get_bitmap_width(image);
-	boundy = al_get_bitmap_height(image);
+	boundx = 130;
+	boundy = 130;
 }
 
 Enemy::~Enemy()
@@ -32,7 +32,15 @@ void Enemy::DrawEnemy()
 {
 	if (live)
 	{
-		al_draw_bitmap(image, x, y, 0);
+		al_draw_scaled_bitmap(
+			image,
+			0, 0,
+			al_get_bitmap_width(image),
+			al_get_bitmap_height(image),
+			x, y,
+			130, 130,
+			0
+		);
 	}
 }
 

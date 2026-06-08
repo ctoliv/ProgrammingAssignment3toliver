@@ -235,8 +235,8 @@ int main(void)
 				al_get_bitmap_height(cannon) / 2,
 				cannonX,
 				cannonY,
-				0.35,
-				0.35,
+				0.20,
+				0.20,
 				cannonAngle,
 				0);
 			//Draw cannonball
