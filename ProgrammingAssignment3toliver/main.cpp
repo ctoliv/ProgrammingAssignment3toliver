@@ -2,6 +2,7 @@
 #include <allegro5\allegro_image.h>
 #include <allegro5\allegro_primitives.h>
 #include "cannonball.h"
+#include "enemy.h"
 
 int main(void)
 {
@@ -9,6 +10,7 @@ int main(void)
 	const int HEIGHT = 600;
 	const int FPS = 60;
 	const int NUM_CANNONBALLS = 10;
+	const int NUM_ENEMIES = 8;
 
 	enum KEYS { LEFT, RIGHT };
 	bool keys[2] = { false, false };
@@ -22,7 +24,6 @@ int main(void)
 
 	ALLEGRO_BITMAP* background = NULL;
 	ALLEGRO_BITMAP* cannon = NULL;
-	ALLEGRO_BITMAP* enemy = NULL;
 	ALLEGRO_BITMAP* base = NULL;
 
 	if (!al_init())
@@ -57,11 +58,10 @@ int main(void)
 	// Load all images needed for the game.
 	background = al_load_bitmap("background.png");
 	cannon = al_load_bitmap("cannon.png");
-	enemy = al_load_bitmap("enemy.png");
 	base = al_load_bitmap("base.png");
 
 	// Error checking for image files.
-	if (!background || !cannon || !enemy || !base)
+	if (!background || !cannon || !base)
 	{
 		al_destroy_display(display);
 		al_destroy_event_queue(event_queue);
@@ -70,6 +70,7 @@ int main(void)
 	}
 
 	Cannonball cannonBalls[NUM_CANNONBALLS];
+	Enemy enemies[NUM_ENEMIES];
 
 	// Cannon position near the bottom center of the screen.
 	float cannonX = WIDTH / 2;
@@ -113,6 +114,11 @@ int main(void)
 			for (int i = 0; i < NUM_CANNONBALLS; i++)
 			{
 				cannonBalls[i].UpdateCannonball(WIDTH, HEIGHT);
+			}
+			for (int i = 0; i < NUM_ENEMIES; i++)
+			{
+				enemies[i].StartEnemy(WIDTH);
+				enemies[i].UpdateEnemy(HEIGHT);
 			}
 		}
 		else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
@@ -176,8 +182,10 @@ int main(void)
 				HEIGHT - al_get_bitmap_height(base),0);
 
 			// Draw one sample enemy near the top.
-			al_draw_bitmap(enemy,
-				WIDTH / 2 - al_get_bitmap_width(enemy) / 2, 50, 0);
+			for (int i = 0; i < NUM_ENEMIES; i++)
+			{
+				enemies[i].DrawEnemy();
+			}
 
 			// Draw the cannon rotated around its center.
 			al_draw_scaled_rotated_bitmap(
@@ -202,7 +210,6 @@ int main(void)
 
 	al_destroy_bitmap(background);
 	al_destroy_bitmap(cannon);
-	al_destroy_bitmap(enemy);
 	al_destroy_bitmap(base);
 
 	al_destroy_timer(timer);
