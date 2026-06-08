@@ -25,6 +25,7 @@ Cannonball::~Cannonball()
 	al_destroy_bitmap(image);
 }
 
+// Draw the cannonball smaller than the original image.
 void Cannonball::DrawCannonball()
 {
 	if (live)

@@ -27,7 +27,7 @@ Enemy::~Enemy()
 {
 	al_destroy_bitmap(image);
 }
-
+// Draw the Enemy smaller than the original image.
 void Enemy::DrawEnemy()
 {
 	if (live)
