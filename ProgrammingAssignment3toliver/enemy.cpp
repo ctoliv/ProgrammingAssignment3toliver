@@ -48,7 +48,7 @@ void Enemy::StartEnemy(int WIDTH)
 {
 	if (!live)
 	{
-		if (rand() % 100 == 0)
+		if (rand() % 300 == 0)
 		{
 			live = true;
 			x = rand() % (WIDTH - boundx);

@@ -102,12 +102,12 @@ int main(void)
 			// Rotate cannon left and right with arrow keys.
 			if (keys[LEFT])
 			{
-				cannonAngle -= 0.03;
+				cannonAngle -= 0.07;
 			}
 
 			if (keys[RIGHT])
 			{
-				cannonAngle += 0.03;
+				cannonAngle += 0.07;
 			}
 
 			// Limit cannon angle so it only aims in an arc.
@@ -152,13 +152,6 @@ int main(void)
 				}
 			}
 
-			for (int i = 0; i < NUM_ENEMIES; i++)
-			{
-				if (enemies[i].CollideBase(baseY))
-				{
-					enemiesLanded++;
-				}
-			}
 		}
 		else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 		{
@@ -187,7 +180,7 @@ int main(void)
 					{
 						float shotAngle = cannonAngle + 0.65;
 
-						cannonBalls[i].FireCannonball(cannonX, cannonY - 60, shotAngle);
+						cannonBalls[i].FireCannonball(cannonX, cannonY - 20, shotAngle);
 						break;
 					}
 				}
