@@ -15,7 +15,7 @@ public:
 	void DrawCannonball();
 	void FireCannonball(float startX, float startY, float angle);
 	void UpdateCannonball(int WIDTH, int HEIGHT);
-	void CollideCannonball(Enemy enemies[], int cSize);
+	bool CollideCannonball(Enemy enemies[], int cSize);
 
 	bool getLive() { return live; }
 

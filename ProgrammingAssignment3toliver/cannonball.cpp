@@ -70,7 +70,7 @@ void Cannonball::UpdateCannonball(int WIDTH, int HEIGHT)
 		}
 	}
 }
-void Cannonball::CollideCannonball(Enemy enemies[], int cSize)
+bool Cannonball::CollideCannonball(Enemy enemies[], int cSize)
 {
 	if (live)
 	{
@@ -85,8 +85,11 @@ void Cannonball::CollideCannonball(Enemy enemies[], int cSize)
 				{
 					live = false;
 					enemies[i].setLive(false);
+					return true;
 				}
 			}
 		}
 	}
+
+	return false;
 }

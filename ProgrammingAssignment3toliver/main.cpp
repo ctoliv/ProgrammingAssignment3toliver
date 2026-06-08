@@ -1,6 +1,7 @@
 #include <allegro5\allegro.h>
 #include <allegro5\allegro_image.h>
 #include <allegro5\allegro_primitives.h>
+#include <allegro5\allegro_font.h>
 #include "cannonball.h"
 #include "enemy.h"
 
@@ -18,14 +19,16 @@ int main(void)
 	bool done = false;
 	bool redraw = true;
 	int enemiesLanded = 0;
+	int score = 0;
 
 	ALLEGRO_DISPLAY* display = NULL;
 	ALLEGRO_EVENT_QUEUE* event_queue = NULL;
 	ALLEGRO_TIMER* timer = NULL;
-
+	ALLEGRO_FONT* font = NULL;
 	ALLEGRO_BITMAP* background = NULL;
 	ALLEGRO_BITMAP* cannon = NULL;
 	ALLEGRO_BITMAP* base = NULL;
+
 
 	if (!al_init())
 	{
@@ -42,6 +45,9 @@ int main(void)
 	al_init_image_addon();
 	al_init_primitives_addon();
 	al_install_keyboard();
+	al_init_font_addon();
+
+	font = al_create_builtin_font();
 
 	event_queue = al_create_event_queue();
 	timer = al_create_timer(1.0 / FPS);
@@ -140,7 +146,10 @@ int main(void)
 
 			for (int i = 0; i < NUM_CANNONBALLS; i++)
 			{
-				cannonBalls[i].CollideCannonball(enemies, NUM_ENEMIES);
+				if (cannonBalls[i].CollideCannonball(enemies, NUM_ENEMIES))
+				{
+					score++;
+				}
 			}
 
 			for (int i = 0; i < NUM_ENEMIES; i++)
@@ -233,15 +242,41 @@ int main(void)
 			{
 				cannonBalls[i].DrawCannonball();
 			}
+			al_draw_textf(font, al_map_rgb(255, 255, 255), 10, 10, 0,
+				"Enemies landed: %d / 5", enemiesLanded);
+
+			al_draw_textf(font, al_map_rgb(255, 255, 255), 10, 30, 0,
+				"Enemies hit: %d", score);
 
 			al_flip_display();
 		}
 	}
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+
+	al_draw_text(font, al_map_rgb(255, 255, 255),
+		WIDTH / 2, HEIGHT / 2 - 40,
+		ALLEGRO_ALIGN_CENTER,
+		"Game Over");
+
+	al_draw_textf(font, al_map_rgb(255, 255, 255),
+		WIDTH / 2, HEIGHT / 2,
+		ALLEGRO_ALIGN_CENTER,
+		"Enemies hit: %d", score);
+
+	al_draw_textf(font, al_map_rgb(255, 255, 255),
+		WIDTH / 2, HEIGHT / 2 + 40,
+		ALLEGRO_ALIGN_CENTER,
+		"Enemies landed: %d / 5", enemiesLanded);
+
+	al_flip_display();
+
+	al_rest(5.0);
 
 	al_destroy_bitmap(background);
 	al_destroy_bitmap(cannon);
 	al_destroy_bitmap(base);
 
+	al_destroy_font(font);
 	al_destroy_timer(timer);
 	al_destroy_event_queue(event_queue);
 	al_destroy_display(display);
