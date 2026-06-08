@@ -59,3 +59,16 @@ void Enemy::UpdateEnemy(int HEIGHT)
 		}
 	}
 }
+bool Enemy::CollideBase(int baseY)
+{
+	if (live)
+	{
+		if (y + boundy >= baseY)
+		{
+			live = false;
+			return true;
+		}
+	}
+
+	return false;
+}

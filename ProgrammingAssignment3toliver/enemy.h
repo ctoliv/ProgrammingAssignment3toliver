@@ -19,6 +19,7 @@ public:
 	int getBoundX() { return boundx; }
 	int getBoundY() { return boundy; }
 	bool getLive() { return live; }
+	bool CollideBase(int baseY);
 	void setLive(bool l) { live = l; }
 
 private:

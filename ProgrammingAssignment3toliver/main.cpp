@@ -17,6 +17,7 @@ int main(void)
 
 	bool done = false;
 	bool redraw = true;
+	int enemiesLanded = 0;
 
 	ALLEGRO_DISPLAY* display = NULL;
 	ALLEGRO_EVENT_QUEUE* event_queue = NULL;
@@ -68,6 +69,8 @@ int main(void)
 		al_destroy_timer(timer);
 		return -1;
 	}
+	// Top edge of the base where enemies count as landed.
+	int baseY = HEIGHT - al_get_bitmap_height(base);
 
 	Cannonball cannonBalls[NUM_CANNONBALLS];
 	Enemy enemies[NUM_ENEMIES];
@@ -115,14 +118,37 @@ int main(void)
 			{
 				cannonBalls[i].UpdateCannonball(WIDTH, HEIGHT);
 			}
+
 			for (int i = 0; i < NUM_ENEMIES; i++)
 			{
 				enemies[i].StartEnemy(WIDTH);
 				enemies[i].UpdateEnemy(HEIGHT);
 			}
+
+			for (int i = 0; i < NUM_ENEMIES; i++)
+			{
+				if (enemies[i].CollideBase(baseY))
+				{
+					enemiesLanded++;
+				}
+			}
+
+			if (enemiesLanded >= 5)
+			{
+				done = true;
+			}
+
 			for (int i = 0; i < NUM_CANNONBALLS; i++)
 			{
 				cannonBalls[i].CollideCannonball(enemies, NUM_ENEMIES);
+			}
+
+			for (int i = 0; i < NUM_ENEMIES; i++)
+			{
+				if (enemies[i].CollideBase(baseY))
+				{
+					enemiesLanded++;
+				}
 			}
 		}
 		else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
