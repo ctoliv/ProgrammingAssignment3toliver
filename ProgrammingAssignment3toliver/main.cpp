@@ -111,14 +111,14 @@ int main(void)
 			}
 
 			// Limit cannon angle so it only aims in an arc.
-			if (cannonAngle < -1.0)
+			if (cannonAngle < -1.65)
 			{
-				cannonAngle = -1.0;
+				cannonAngle = -1.65;
 			}
 
-			if (cannonAngle > 1.0)
+			if (cannonAngle > 0.35)
 			{
-				cannonAngle = 1.0;
+				cannonAngle = 0.35;
 			}
 			for (int i = 0; i < NUM_CANNONBALLS; i++)
 			{
@@ -185,7 +185,9 @@ int main(void)
 				{
 					if (!cannonBalls[i].getLive())
 					{
-						cannonBalls[i].FireCannonball(cannonX, cannonY, cannonAngle);
+						float shotAngle = cannonAngle + 0.65;
+
+						cannonBalls[i].FireCannonball(cannonX, cannonY - 60, shotAngle);
 						break;
 					}
 				}

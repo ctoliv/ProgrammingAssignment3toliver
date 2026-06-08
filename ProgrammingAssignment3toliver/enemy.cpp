@@ -17,6 +17,8 @@ Enemy::Enemy()
 		exit(1);
 	}
 
+	al_convert_mask_to_alpha(image, al_map_rgb(255, 255, 255));
+
 	boundx = al_get_bitmap_width(image);
 	boundy = al_get_bitmap_height(image);
 }
