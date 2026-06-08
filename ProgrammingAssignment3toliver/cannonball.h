@@ -1,6 +1,8 @@
 #pragma once
 #ifndef CANNONBALLH
 #define CANNONBALLH
+#include "enemy.h"
+
 
 #include <allegro5\allegro.h>
 
@@ -13,6 +15,7 @@ public:
 	void DrawCannonball();
 	void FireCannonball(float startX, float startY, float angle);
 	void UpdateCannonball(int WIDTH, int HEIGHT);
+	void CollideCannonball(Enemy enemies[], int cSize);
 
 	bool getLive() { return live; }
 

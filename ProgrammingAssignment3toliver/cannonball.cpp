@@ -70,3 +70,23 @@ void Cannonball::UpdateCannonball(int WIDTH, int HEIGHT)
 		}
 	}
 }
+void Cannonball::CollideCannonball(Enemy enemies[], int cSize)
+{
+	if (live)
+	{
+		for (int i = 0; i < cSize; i++)
+		{
+			if (enemies[i].getLive())
+			{
+				if (x > enemies[i].getX() &&
+					x < enemies[i].getX() + enemies[i].getBoundX() &&
+					y > enemies[i].getY() &&
+					y < enemies[i].getY() + enemies[i].getBoundY())
+				{
+					live = false;
+					enemies[i].setLive(false);
+				}
+			}
+		}
+	}
+}

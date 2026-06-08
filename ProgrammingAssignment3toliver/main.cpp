@@ -120,6 +120,10 @@ int main(void)
 				enemies[i].StartEnemy(WIDTH);
 				enemies[i].UpdateEnemy(HEIGHT);
 			}
+			for (int i = 0; i < NUM_CANNONBALLS; i++)
+			{
+				cannonBalls[i].CollideCannonball(enemies, NUM_ENEMIES);
+			}
 		}
 		else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 		{
